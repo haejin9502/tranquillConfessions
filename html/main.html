@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Document</title>
+</head>
+<body style="display: none;">
+    <div id="app">
+        <div id="wrap">
+            <div id="dialog">
+                <nav class="dialog-nav">
+                    <div class="nav-item nav-selected">
+                        <img src="../dist/images/icon_read.svg" alt="icon">
+                        <p>읽기</p>
+                    </div>
+                    <div class="nav-item">
+                        <img src="../dist/images/icon_write.svg" alt="icon">
+                        <p>쓰기</p>
+                    </div>
+                    <div class="nav-item">
+                        <img src="../dist/images/icon_user.svg" alt="icon">
+                        <p>내정보</p>
+                    </div>
+                    <div class="nav-item">
+                        <img src="../dist/images/icon_setting.svg" alt="icon">
+                        <p>설정</p>
+                    </div>
+                </nav>
+                <main class="dialog-main">
+                    <nav class="dialog-main-nav">
+                        <div class="dialog-main-nav-item dialog-main-nav-item-selected"><span>전체보기</span></div>
+                        <div class="dialog-main-nav-item"><span>월별보기</span></div>
+                        <div class="dialog-main-nav-item"><span>한장씩보기</span></div>
+                        <div class="dialog-main-nav-item dialog-main-nav-item-input-wrap">
+                            <img src="../dist/images/icon-search.svg" alt="icon">
+                            <input type="text" name="input-text-search" class="input-text" placeholder="제목을 입력해주세요.">
+                            <div class="dialog-main-nav-search-btn">검색</div>
+                        </div>
+                    </nav>
+                    <article class="dialog-main-item-wrap scroll-none">
+                        <div class="dialog-main-item">
+                            <img class="dialog-main-item-img" src="" alt="dialog-main-item-img">
+                            <div class="dialog-main-item-title-wrap">
+                                <p>제목테스트제목테스트</p>
+                                <p>2023.10.09</p>
+                            </div>
+                        </div>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../dist/js/main.js"></script>
+</html>

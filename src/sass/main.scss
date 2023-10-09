@@ -1,0 +1,435 @@
+@import "base.scss";
+
+#app {
+    #wrap {
+        #dialog {
+            width: calc(100% - 5vw);
+            height: calc(100% - 5vw);
+            border-radius: 3rem;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            background-color: rgba($color: #fff, $alpha: .7);
+            display: flex;
+
+            //모바일
+            @include mobile {
+                flex-direction: column-reverse;
+
+                .dialog-nav {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    height: 90px;
+                    align-items: center;
+                    justify-content: space-evenly;
+                    box-shadow: 0px 0px 14px 3px #6c6c6c33;
+
+                    .nav-item {
+                        aspect-ratio: 1/1;
+                        height: 70px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        cursor: pointer;
+                        border-radius: 1rem;
+
+                        img {
+                            width: 30px;
+                            height: auto;
+                        }
+
+                        p {
+                            margin-top: 5px;
+                            @include setFontSize(1.5rem);
+                        }
+                    }
+
+                    .nav-selected {
+                        background-color: rgba($color: #8954FE, $alpha: .2);
+                    }
+                }
+
+                .dialog-main {
+                    width: 100%;
+                    height: calc(100% - 90px);
+                    display: flex;
+                    flex-direction: column;
+
+                    .dialog-main-nav {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr;
+                        width: calc(100% - 40px);
+                        margin-left: 20px;
+                        margin-right: 20px;
+                        gap: 2vw;
+
+                        .dialog-main-nav-item {
+                            display: flex;
+                            align-items: center;
+                            margin-top: 20px;
+                            height: 4rem;
+                            border-radius: 3rem;
+                            background-color: rgba($color: #8954FE, $alpha: .1);
+                            cursor: pointer;
+
+                            span {
+                                display: flex;
+                                width: 100%;
+                                height: 100%;
+                                align-items: center;
+                                justify-content: center;
+                                color: black;
+                                @include setFontSize(1.5rem);
+                            }
+
+                            img {
+                                width: 25px;
+                                height: auto;
+                                margin-left: 25px;
+                            }
+
+                            .input-text {
+                                margin-left: 25px;
+                                width: calc(100% - 161px);
+                                height: 100%;
+                                @include setFontSize(1.5rem);
+                                border: none;
+                                background: none;
+                            }
+
+                            .dialog-main-nav-search-btn {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                width: 80px;
+                                margin-right: 3px;
+                                margin-left: 3px;
+                                height: 3.5rem;
+                                background-color: #8954FE;
+                                color: white;
+                                @include setFontSize(1.5rem);
+                                border-radius: 3rem;
+                                cursor: pointer;
+                            }
+                        }
+
+                        .dialog-main-nav-item:nth-child(4) {
+                            cursor: inherit;
+                            grid-column: span 3;
+                            margin-top: 0px;
+                        }
+
+                        .dialog-main-nav-item-selected {
+                            background-color: rgba($color: #8954FE, $alpha: 1.0);
+
+                            span {
+                                color: white;
+                                font-weight: 700;
+                            }
+                        }
+                    }
+
+                    .dialog-main-item-wrap {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        width: calc(100% - 40px);
+                        margin-left: 20px;
+                        margin-right: 20px;
+                        height: calc(100% - 8rem - 30px);
+                        align-content: start;
+                        overflow-y: auto;
+
+                        .dialog-main-item {
+                            height: fit-content;
+                            aspect-ratio: 230/296;
+                            margin-top: 20px;
+                            width: calc(50% - 10px);
+                            max-width: calc(50% - 10px);
+                            margin-right: 20px;
+                            display: flex;
+                            flex-direction: column;
+                            overflow: hidden;
+
+                            .dialog-main-item-img {
+                                width: calc(100% - 2px);
+                                aspect-ratio: 1/1;
+                                border-top-left-radius: 2rem;
+                                border-top-right-radius: 2rem;
+                                border: 1px solid rgba($color: #8954FE, $alpha: .3);
+                                border-bottom: none;
+                            }
+
+                            .dialog-main-item-title-wrap {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                width: 100%;
+                                flex: 1;
+                                background-color: rgba($color: #8954FE, $alpha: .5);
+                                border-bottom-left-radius: 2rem;
+                                border-bottom-right-radius: 2rem;
+
+                                p {
+                                    color: white;
+                                    @include setFontSize(1.3rem);
+                                    width: 100%;
+                                    text-align: center;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+
+                                p:nth-child(2) {
+                                    margin-top: 5px;
+                                    @include setFontSize(1.1rem);
+                                }
+                            }
+                        }
+
+                        .dialog-main-item:nth-child(2n) {
+                            margin-right: 0px;
+                        }
+                    }
+                }
+            }
+
+            //PC,태블릿
+            @include desktop {
+                flex-direction: row;
+
+                .dialog-nav {
+                    height: calc(100% - 120px);
+                    margin-top: 120px;
+
+                    @include desktop_1400_under {
+                        height: calc(100% - 205px);
+                        margin-top: 205px;
+                    }
+
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 20px;
+                    margin-right: 60px;
+                    overflow: auto;
+
+                    .nav-item {
+                        width: 90px;
+                        height: 90px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        margin-bottom: 20px;
+                        cursor: pointer;
+                        border-radius: 1.2rem;
+
+                        img {
+                            width: 30px;
+                            height: auto;
+                        }
+
+                        p {
+                            margin-top: 5px;
+                            @include setFontSize;
+                        }
+                    }
+
+                    .nav-selected {
+                        background-color: rgba($color: #8954FE, $alpha: .2);
+                    }
+                }
+
+                .dialog-main {
+                    height: 100%;
+                    width: calc(100% - 230px);
+                    display: flex;
+                    flex-direction: column;
+                    margin-right: 60px;
+
+                    .dialog-main-nav {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr 3fr;
+                        width: 100%;
+                        height: 120px;
+                        gap: 2vw;
+
+                        @include desktop_1400_under {
+                            height: 180px;
+                            grid-template-columns: 1fr 1fr 1fr;
+                        }
+
+                        .dialog-main-nav-item {
+                            display: flex;
+                            align-items: center;
+                            margin-top: 30px;
+                            height: 60px;
+                            border-radius: 3rem;
+                            background-color: rgba($color: #8954FE, $alpha: .1);
+                            cursor: pointer;
+
+                            span {
+                                display: flex;
+                                width: 100%;
+                                height: 100%;
+                                align-items: center;
+                                justify-content: center;
+                                color: black;
+                                @include setFontSize(1.8rem);
+                            }
+
+                            img {
+                                width: 30px;
+                                height: auto;
+                                margin-left: 25px;
+                            }
+
+                            .input-text {
+                                margin-left: 25px;
+                                width: calc(100% - 186px);
+                                height: 100%;
+                                @include setFontSize(1.8rem);
+                                border: none;
+                                background: none;
+                            }
+
+                            .dialog-main-nav-search-btn {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                width: 100px;
+                                margin-right: 3px;
+                                margin-left: 3px;
+                                height: 52px;
+                                background-color: #8954FE;
+                                color: white;
+                                @include setFontSize(1.8rem);
+                                border-radius: 3rem;
+                                cursor: pointer;
+                            }
+                        }
+
+                        .dialog-main-nav-item-selected {
+                            background-color: rgba($color: #8954FE, $alpha: 1.0);
+
+                            span {
+                                color: white;
+                                font-weight: 700;
+                            }
+                        }
+
+                        .dialog-main-nav-item:nth-child(4) {
+                            cursor: inherit;
+
+                            @include desktop_1400_under {
+                                grid-column: span 3;
+                                margin-top: 0px;
+                            }
+                        }
+                    }
+
+                    .dialog-main-item-wrap {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        width: 100%;
+                        height: calc(100% - 120px);
+                        align-content: start;
+                        overflow-y: auto;
+
+                        .dialog-main-item {
+                            height: fit-content;
+                            aspect-ratio: 230/296;
+                            display: flex;
+                            flex-direction: column;
+                            overflow: hidden;
+
+                            .dialog-main-item-img {
+                                width: calc(100% - 2px);
+                                aspect-ratio: 1/1;
+                                border-top-left-radius: 2rem;
+                                border-top-right-radius: 2rem;
+                                border: 1px solid rgba($color: #8954FE, $alpha: .3);
+                                border-bottom: none;
+                            }
+
+                            .dialog-main-item-title-wrap {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
+                                width: 100%;
+                                flex: 1;
+                                background-color: rgba($color: #8954FE, $alpha: .5);
+                                border-bottom-left-radius: 2rem;
+                                border-bottom-right-radius: 2rem;
+
+                                p {
+                                    width: 100%;
+                                    text-align: center;
+                                    color: white;
+                                    @include setFontSize(1.3rem);
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+
+                                p:nth-child(2) {
+                                    margin-top: 5px;
+                                    @include setFontSize(1.1rem);
+                                }
+                            }
+                        }
+
+                        @include desktop_1400_over {
+                            .dialog-main-item {
+                                width: calc(20% - 22px);
+                                max-width: calc(20% - 22px);
+                                margin-right: 25px;
+                                margin-bottom: 20px;
+                            }
+
+                            .dialog-main-item:nth-child(5n) {
+                                margin-right: 0px;
+                            }
+                        }
+
+                        @include desktop_1400_under {
+                            height: calc(100% - 180px);
+
+                            .dialog-main-item {
+                                margin-top: 20px;
+                                width: calc(25% - 23px);
+                                max-width: calc(25% - 23px);
+                                margin-right: 28px;
+                            }
+
+                            .dialog-main-item:nth-child(4n) {
+                                margin-right: 0px;
+                            }
+                        }
+
+                        @include desktop_950_under {
+                            height: calc(100% - 180px);
+
+                            .dialog-main-item {
+                                margin-top: 20px;
+                                width: calc(50% - 12px);
+                                max-width: calc(50% - 12px);
+                                margin-right: 20px;
+                            }
+
+                            .dialog-main-item:nth-child(2n) {
+                                margin-right: 0px;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

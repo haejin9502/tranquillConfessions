@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Document</title>
+</head>
+
+<body style="display: none;">
+    <div id="app">
+        <div id="wrap">
+            <div id="dialog">
+                <div class="index">
+                    <img src="../dist/images/logo.png" alt="logo">
+                    <button id="indexBtn">입장</button>
+                </div>
+                <section>
+                    <article class="dialog-left-box">
+                        <h2>환영합니다!</h2>
+                    </article>
+                    <article class="dialog-right-box">
+                        <h2>로그인</h2>
+
+                        <div class="dialog-right-box-input-wrap">
+                            <div class="input-wrap-item">
+                                <p>아이디</p>
+                                <input type="text" name="input-text-user" id="inputId" class="input-text" autocapitalize="off" data-tab="1" data-msg="아이디">
+                            </div>
+                            <div class="input-wrap-item">
+                                <p>비밀번호</p>
+                                <input type="password" name="input-text-user" id="inputPw" class="input-text" data-tab="2" data-msg="비밀번호">
+                            </div>
+                        </div>
+
+                        <!-- <div class="dialog-right-box-chk-box-wrap">
+                            <input type="checkbox" name="input-chk-user" id="inputAutoLogin" data-tab="3" >
+                            <label for="inputAutoLogin">자동로그인</label>
+                        </div> -->
+
+                        <button id="loginBtn">로그인</button>
+
+                        <div class="dialog-right-box-sub-wrap">
+                            <p>계정정보를 잊으셨나요?<b id="findUserInfo">아이디/비밀번호 찾기</b></p>
+                            <p>회원이 아닌가요?<b id="signIn">회원가입</b></p>
+                        </div>
+
+                    </article>
+                </section>
+            </div>
+
+            <div id="signDialog">
+                <section>
+                    <article>
+                        <div id="signDialogCancel">
+                            <p></p>
+                            <p></p>
+                        </div>
+                        <h2>회원가입</h2>
+                        <div class="sign-dialog-input-wrap">
+                            <div class="input-wrap-item">
+                                <p>아이디</p>
+                                <input type="text" name="input-text-user" id="inputSignId" class="input-sign-text" autocapitalize="off" data-tab="1" data-msg="아이디">
+                                <button>중복확인</button>
+                            </div>
+                            <div class="input-wrap-item">
+                                <p>닉네임</p>
+                                <input type="text" name="input-text-user" id="inputSignNick" class="input-sign-text" autocapitalize="off" data-tab="2" data-msg="아이디">
+                                <button>중복확인</button>
+                            </div>
+                            <div class="input-wrap-item">
+                                <p>비밀번호</p>
+                                <input type="password" name="input-text-user" id="inputSignPw" class="input-sign-text" data-tab="3" data-msg="비밀번호">
+                            </div>
+                            <div class="input-wrap-item">
+                                <p>비밀번호확인</p>
+                                <input type="password" name="input-text-user" id="inputSignPwCheck" class="input-sign-text" data-tab="4" data-msg="비밀번호">
+                            </div>
+                        </div>
+
+                        <div class="sign-dialog-chk-box-wrap">
+                            <div class="sign-dialog-chk-box-item">
+                                <input type="checkbox" name="input-chk-user" id="inputTerms">
+                                <label for="inputTerms">이용약관 동의(필수)</label>
+                                <button id="terms">전문보기</button>
+                            </div>
+                            <div class="sign-dialog-chk-box-item">
+                                <input type="checkbox" name="input-chk-user" id="inputPrivacyTerms">
+                                <label for="inputPrivacyTerms">개인정보 수집이용 동의(필수)</label>
+                                <button id="terms">전문보기</button>
+                            </div>
+                        </div>
+
+                        <button id="signBtn">회원가입</button>
+                    </article>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../dist/js/index.js"></script>
+
+</html>

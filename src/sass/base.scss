@@ -1,0 +1,41 @@
+@import "utils.scss";
+$baseScreenWidth: calc(var(--vw, 1vw) * 100); // 기본 화면 너비
+$baseScreenHeight: calc(var(--vh, 1vh) * 100); //기본 화면 높이
+
+@mixin setFontSize($size : 1.6rem) {
+    @include fontSize($size);
+
+    @include fold {
+        @include fontSize($size * .75);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Nanum Myeongjo;
+    font-weight: 400;
+}
+
+body {
+    background: linear-gradient(-45deg, #4a90e2, #da70d6, #ffc0cb, #40e0d0);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+
+    #app {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: $baseScreenWidth;
+        height: $baseScreenHeight;
+
+        #wrap {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+    }
+}
