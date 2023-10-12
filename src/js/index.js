@@ -12,7 +12,7 @@ $(()=> {
             type : "POST",
             url : "../api/validateToken.php",
             data : JSON.stringify({token : getLocalStorage("token")}),
-            async : false,
+            async : false, //동기처리
             contentType : "application/json",
             dataType : "json",
             success : res => {
