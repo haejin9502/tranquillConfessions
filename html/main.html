@@ -52,5 +52,10 @@
         </div>
     </div>
 </body>
-<script src="../dist/js/main.js"></script>
+<script>
+    const timestamp = new Date().getTime();
+    const script = document.createElement('script');
+    script.src = `../dist/js/main.js?ts=${timestamp}`;
+    document.head.appendChild(script);
+</script>
 </html>
