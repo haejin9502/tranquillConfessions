@@ -1,6 +1,6 @@
 import "../sass/main.scss";
-import {calSize} from "./utils/cal_size.js"
-
+import {calSize} from "./utils/calSize.js"
+import{getLocalStorage,setLocalStorage} from "./utils/localStorage.js"
 $(()=> {
     calSize();
     $("body").fadeIn(1000);
