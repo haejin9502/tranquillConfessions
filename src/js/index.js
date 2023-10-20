@@ -1,9 +1,11 @@
+import apiConfig from '../json/api-config.json';
 import "../sass/index.scss";
 import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck} from "./utils/util.js"
 
+
 let idDuplicateCheck = false;
 let nickDuplicateCheck = false;
-let emailDuplicateCheck = false;//zs
+let emailDuplicateCheck = false;
 
 $(()=> {
     calSize();
@@ -13,7 +15,7 @@ $(()=> {
     if(getLocalStorage("token") != null){
         $.ajax({
             type : "POST",
-            url : "../api/validateToken.php",
+            url : apiConfig.validateToken,
             data : JSON.stringify({token : getLocalStorage("token")}),
             async : false, //동기처리
             contentType : "application/json",
@@ -67,7 +69,7 @@ $(()=> {
 
         $.ajax({
             type : "POST",
-            url : "../api/login.php",
+            url : apiConfig.login,
             data : JSON.stringify({id : id, pw : pw}),
             contentType : "application/json",
             dataType : "json",
@@ -160,7 +162,7 @@ $(()=> {
 
         $.ajax({
             type : "POST",
-            url : "../api/duplicate_check.php",
+            url : apiConfig.duplicate_check,
             async : false, //동기처리
             data : JSON.stringify({type : type, contents : $(`#inputSign${type}`).val()}),
             contentType : "application/json",

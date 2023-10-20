@@ -123,7 +123,12 @@ const emailCheck = email => {
     return (email != '' && email != 'undefined' && regex.test(email)); 
 }
 
-
+/**
+ * 비밀번호 정규식 체크 
+ * @author 장해진
+ * @param {String} id 정규식 체크할 비밀번호 입력폼 아이디
+ * @return (bollean) true/false
+ */
 const chkPW = id => {
     const pw = $(id).val();
     const num = pw.search(/[0-9]/g);
@@ -140,7 +145,8 @@ const chkPW = id => {
         alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
         return false;
     }else {
-        console.log("통과");	 
+        console.log("통과");
+        return true;	 
     }
 }
 
