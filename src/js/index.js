@@ -1,7 +1,7 @@
 import apiConfig from '../json/api-config.json';
 import "../sass/index.scss";
 import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck} from "./utils/util.js"
-
+import {login,validateToken,duplicateCheck} from "./cert/cert.js"
 
 let idDuplicateCheck = false;
 let nickDuplicateCheck = false;
@@ -13,29 +13,19 @@ $(()=> {
     //여기서 토큰을 검사해서 있으면 서버에 보낸 뒤 리턴이 ture로 오면 토큰을 갱신한 뒤 main으로 이동한다.
 
     if(getLocalStorage("token") != null){
-        $.ajax({
-            type : "POST",
-            url : apiConfig.validateToken,
-            data : JSON.stringify({token : getLocalStorage("token")}),
-            async : false, //동기처리
-            contentType : "application/json",
-            dataType : "json",
-            success : res => {
-                console.log(res);
-                if(res.result){
-                    //토큰 검증완료 (바로 메인페이지로 이동)
-                    //새로 만든 토큰 등록
-                    setLocalStorage("token",res.data);
-                    location.href = "main.html";
-                }else{
-                    //토큰 검증실패 (만료 및 토큰이 이상함)
-                    //로그인 다시 해야함
-                }
+
+        validateToken(apiConfig.validateToken,getLocalStorage("token"),
+            success => {
+                setLocalStorage("token",success.data);
+                location.href = "main.html";
             },
-            error : res =>{
-                console.log(res);
+            fail => {
+                console.log(fail);
+            },
+            error => {
+                console.log(error);
             }
-        });
+        );
     }
 
     $("body").fadeIn(1000);
@@ -67,28 +57,20 @@ $(()=> {
         const id = $("#inputId").val();
         const pw = $("#inputPw").val();
 
-        $.ajax({
-            type : "POST",
-            url : apiConfig.login,
-            data : JSON.stringify({id : id, pw : pw}),
-            contentType : "application/json",
-            dataType : "json",
-            success : res => {
-                console.log(res);
-                if(res.result){
-                    //로그인성공, 토큰저장
-                    setLocalStorage("token",res.data);
-                    location.href = "main.html";
-                }else{
-                    alert(res.msg);
-                }
+        login(apiConfig.login,id,pw,
+            success => {
+                setLocalStorage("token",success.data);
+                location.href = "main.html";
             },
-            error : res =>{
-                console.log(res);
+            fail => {
+                alert(fail.msg);
+            },
+            error => {
+                console.log(error);
                 alert("네트워크 에러! 페이지가 새로고침 됩니다");
                 location.reload();
             }
-        });
+        );
     });
     
     //아이디,비밀번호 키 변화 이벤트
@@ -160,40 +142,29 @@ $(()=> {
             }
         }
 
-        $.ajax({
-            type : "POST",
-            url : apiConfig.duplicate_check,
-            async : false, //동기처리
-            data : JSON.stringify({type : type, contents : $(`#inputSign${type}`).val()}),
-            contentType : "application/json",
-            dataType : "json",
-            success : res => {
-                console.log(res);
-                if(res.result){
-                    $(`#inputSign${type}`).prop("disabled", true);
-                    $(this).text("변경");
+        duplicateCheck(apiConfig.duplicate_check,type,$(`#inputSign${type}`).val(),
+            success => {
+                $(`#inputSign${type}`).prop("disabled", true);
+                $(this).text("변경");
 
-                    if(type == "Id"){
-                        idDuplicateCheck = true;
-                        console.log(idDuplicateCheck);
-                        $("#signIdOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 아이디 입니다.)")});
-                    }else if(type == "Nick"){
-                        console.log(nickDuplicateCheck);
-                        $("#signNickOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 닉네임 입니다.)")});
-                    }else if(type == "Email"){
-                        emailDuplicateCheck = true;
-                        console.log(emailDuplicateCheck);
-                        $("#signEmailOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 이메일 입니다.)")});
-                    }
-
-                }else{
-                    alert(res.msg);
+                if(type == "Id"){
+                    idDuplicateCheck = true;
+                    $("#signIdOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 아이디 입니다.)")});
+                }else if(type == "Nick"){
+                    nickDuplicateCheck = true;
+                    $("#signNickOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 닉네임 입니다.)")});
+                }else if(type == "Email"){
+                    emailDuplicateCheck = true;
+                    $("#signEmailOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 이메일 입니다.)")});
                 }
             },
-            error : res =>{
-                console.log(res);
+            fail => {
+                alert(fail.msg);
+            },
+            error => {
+                console.log(error);
             }
-        });
+        );
     });
 
     //회원가입 닫기 버튼
