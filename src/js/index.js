@@ -3,7 +3,7 @@ import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck} from 
 
 let idDuplicateCheck = false;
 let nickDuplicateCheck = false;
-let emailDuplicateCheck = false;
+let emailDuplicateCheck = false;//zs
 
 $(()=> {
     calSize();
