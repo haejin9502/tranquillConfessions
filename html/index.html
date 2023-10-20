@@ -25,11 +25,11 @@
                         <div class="dialog-right-box-input-wrap">
                             <div class="input-wrap-item">
                                 <p>아이디</p>
-                                <input type="text" name="input-text-user" id="inputId" class="input-text" autocapitalize="off" data-tab="1" data-msg="아이디">
+                                <input type="text" name="input-text-user" id="inputId" class="input-text" autocapitalize="off" data-tab="1" data-msg="아이디" maxlength="20" placeholder="20자 까지의 영문/숫자 입력가능">
                             </div>
                             <div class="input-wrap-item">
                                 <p>비밀번호</p>
-                                <input type="password" name="input-text-user" id="inputPw" class="input-text" data-tab="2" data-msg="비밀번호">
+                                <input type="password" name="input-text-user" id="inputPw" class="input-text input-pw" data-tab="2" data-msg="비밀번호" maxlength="20">
                             </div>
                         </div>
 
@@ -42,7 +42,7 @@
 
                         <div class="dialog-right-box-sub-wrap">
                             <p>계정정보를 잊으셨나요?<b id="findUserInfo">아이디/비밀번호 찾기</b></p>
-                            <p>회원이 아닌가요?<b id="signIn">회원가입</b></p>
+                            <p>회원이 아닌가요?<b id="signDialogOpen">회원가입</b></p>
                         </div>
 
                     </article>
@@ -57,37 +57,38 @@
                             <p></p>
                         </div>
                         <h2>회원가입</h2>
-                        <div class="sign-dialog-input-wrap">
+                        <div class="sign-dialog-input-wrap scroll-none">
                             <div class="input-wrap-item">
-                                <p>아이디</p>
-                                <input type="text" name="input-text-user" id="inputSignId" class="input-sign-text" autocapitalize="off" data-tab="1" data-msg="아이디">
-                                <button>중복확인</button>
+                                <p>아이디<span id="signIdOkMsg">/span></p>
+                                <input type="text" name="input-text-user" id="inputSignId" class="input-sign-text" autocapitalize="off" data-tab="1" data-msg="아이디" maxlength="20" placeholder="20자 까지의 영문/숫자 입력가능">
+                                <button class="duplicate-chk-btn" data-type="Id" data-msg="아이디">중복확인</button>
                             </div>
                             <div class="input-wrap-item">
-                                <p>닉네임</p>
-                                <input type="text" name="input-text-user" id="inputSignNick" class="input-sign-text" autocapitalize="off" data-tab="2" data-msg="아이디">
-                                <button>중복확인</button>
+                                <p>닉네임<span id="signNickOkMsg"></span></p>
+                                <input type="text" name="input-text-user" id="inputSignNick" class="input-sign-text" autocapitalize="off" data-tab="2" data-msg="닉네임" maxlength="10" placeholder="10자까지 입력가능">
+                                <button class="duplicate-chk-btn" data-type="Nick" data-msg="닉네임">중복확인</button>
                             </div>
                             <div class="input-wrap-item">
-                                <p>비밀번호</p>
-                                <input type="password" name="input-text-user" id="inputSignPw" class="input-sign-text" data-tab="3" data-msg="비밀번호">
+                                <p>비밀번호<span id="signPasswordOkMsg">(비밀번호가 일치합니다.)</span></p>
+                                <input type="password" name="input-text-user" id="inputSignPw" class="input-sign-text input-pw" data-tab="3" data-msg="비밀번호" maxlength="20">
                             </div>
                             <div class="input-wrap-item">
-                                <p>비밀번호확인</p>
-                                <input type="password" name="input-text-user" id="inputSignPwCheck" class="input-sign-text" data-tab="4" data-msg="비밀번호">
+                                <p>이메일<span id="signEmailOkMsg"></span></p>
+                                <input type="email" name="input-text-user" id="inputSignEmail" class="input-sign-text" data-tab="4" data-msg="이메일" maxlength="100" pattern=".+@globex\.com" placeholder="youremail@example.com"required>
+                                <button class="duplicate-chk-btn" data-type="Email" data-msg="이메일">중복확인</button>
                             </div>
                         </div>
 
                         <div class="sign-dialog-chk-box-wrap">
                             <div class="sign-dialog-chk-box-item">
-                                <input type="checkbox" name="input-chk-user" id="inputTerms">
+                                <input type="checkbox" name="input-chk-user" id="inputTerms" class="input-sign-chk-box">
                                 <label for="inputTerms">이용약관 동의(필수)</label>
-                                <button id="terms">전문보기</button>
+                                <button id="viewTerms">전문보기</button>
                             </div>
                             <div class="sign-dialog-chk-box-item">
-                                <input type="checkbox" name="input-chk-user" id="inputPrivacyTerms">
+                                <input type="checkbox" name="input-chk-user" id="inputPrivacyTerms" class="input-sign-chk-box">
                                 <label for="inputPrivacyTerms">개인정보 수집이용 동의(필수)</label>
-                                <button id="terms">전문보기</button>
+                                <button id="viewPrivacyTerms">전문보기</button>
                             </div>
                         </div>
 
@@ -96,6 +97,12 @@
                 </section>
             </div>
         </div>
+
+        <div id="progressOverlay">
+            <div id="progressSpinner"></div>
+            <p id="progressText"></p>
+        </div>
+
     </div>
 </body>
 <script>

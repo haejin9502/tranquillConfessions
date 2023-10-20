@@ -1,7 +1,10 @@
 import "../sass/index.scss";
-import {calSize} from "./utils/calSize.js"
-import {tab} from "./utils/tab.js"
-import{getLocalStorage,setLocalStorage} from "./utils/localStorage.js"
+import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck} from "./utils/util.js"
+
+let idDuplicateCheck = false;
+let nickDuplicateCheck = false;
+let emailDuplicateCheck = false;
+
 $(()=> {
     calSize();
 
@@ -34,6 +37,8 @@ $(()=> {
     }
 
     $("body").fadeIn(1000);
+
+    inputLimit("#inputSignId,#inputId"); //아이디입력 (영문숫자만)
 
     //로그인하기 버튼
     $("#indexBtn").on("click", (e) => {
@@ -82,16 +87,6 @@ $(()=> {
                 location.reload();
             }
         });
-
-        // fetch("../api/login.php",{
-        //     method : "POST",
-        //     body : JSON.stringify({
-        //         id : id,
-        //         pw : pw
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((result) => console.log(result));
     });
     
     //아이디,비밀번호 키 변화 이벤트
@@ -99,20 +94,130 @@ $(()=> {
         tab(".input-text", this, e);
     });
 
+    //회원가입 키 변화 이벤트
     $(".input-sign-text").on("keydown", function (e) {
         tab(".input-sign-text", this, e);
     });
 
     //회원가입 버튼(로그인창)
-    $("#signIn").on("click", (e) => {
+    $("#signDialogOpen").on("click", (e) => {
         e.preventDefault();
         $("#signDialog").fadeIn(500);
     });
 
-    //회원가입 닫기 버튼
-    $("#signDialogCancel").on("click", (e) => {
+    //중복체크
+    $(".duplicate-chk-btn").on("click",function(e){
         e.preventDefault();
-        $("#signDialog").fadeOut(500);
+        const type = $(this).data("type");
+        const msg = $(this).data("msg");
+        if($(`#inputSign${type}`).val()==""){
+            alert(`${msg}(을)를 입력해주세요`);
+            return;
+        }
+
+        if(type == "Id"){
+            if($(`#inputSignId`).val().length < 6){
+                alert("아이디는 6글자 이상 입력해주세요.");
+                return;
+            }
+
+            if(idDuplicateCheck){
+                $(this).text("중복확인");
+                $(`#inputSign${type}`).prop("disabled", false);
+                idDuplicateCheck = false;
+                $("#signIdOkMsg").hide();
+                return;
+            }
+        }
+
+        if(type == "Nick"){
+            if($(`#inputSignNick`).val().length < 2){
+                alert("닉네임은 2글자 이상 입력해주세요.");
+                return;
+            }
+            if(nickDuplicateCheck){
+                $(this).text("중복확인");
+                $(`#inputSign${type}`).prop("disabled", false);
+                nickDuplicateCheck = false;
+                $("#signNickOkMsg").hide();
+                return;
+            }
+        }
+
+        if(type == "Email"){
+            if(!emailCheck($("#inputSignEmail").val())){
+                alert("이메일 형식을 맞춰주세요.");
+                return;
+            }
+            if(emailDuplicateCheck){
+                $(this).text("중복확인");
+                $(`#inputSign${type}`).prop("disabled", false);
+                emailDuplicateCheck = false;
+                $("#signEmailOkMsg").hide();
+                return;
+            }
+        }
+
+        $.ajax({
+            type : "POST",
+            url : "../api/duplicate_check.php",
+            async : false, //동기처리
+            data : JSON.stringify({type : type, contents : $(`#inputSign${type}`).val()}),
+            contentType : "application/json",
+            dataType : "json",
+            success : res => {
+                console.log(res);
+                if(res.result){
+                    $(`#inputSign${type}`).prop("disabled", true);
+                    $(this).text("변경");
+
+                    if(type == "Id"){
+                        idDuplicateCheck = true;
+                        console.log(idDuplicateCheck);
+                        $("#signIdOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 아이디 입니다.)")});
+                    }else if(type == "Nick"){
+                        console.log(nickDuplicateCheck);
+                        $("#signNickOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 닉네임 입니다.)")});
+                    }else if(type == "Email"){
+                        emailDuplicateCheck = true;
+                        console.log(emailDuplicateCheck);
+                        $("#signEmailOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 이메일 입니다.)")});
+                    }
+
+                }else{
+                    alert(res.msg);
+                }
+            },
+            error : res =>{
+                console.log(res);
+            }
+        });
     });
-})
+
+    //회원가입 닫기 버튼
+    $("#signDialogCancel").on("click", e => {
+        e.preventDefault();
+        $("#signDialog").fadeOut(500,()=>{
+            $(".input-sign-text").val("");
+            $(".input-sign-chk-box").prop("checked", false)
+        });
+    });
+
+    $("#signBtn").on("click", e => {
+        e.preventDefault();
+    });
+});
+
+
+
+//fetch 예제
+// fetch("../api/login.php",{
+//     method : "POST",
+//     body : JSON.stringify({
+//         id : id,
+//         pw : pw
+//     })
+// })
+// .then((response) => response.json())
+// .then((result) => console.log(result));
 

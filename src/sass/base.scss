@@ -22,6 +22,18 @@ body {
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 
+    @include mobile {
+        input::placeholder{
+            @include setFontSize(1.2rem);
+        }
+    }
+
+    input:disabled {
+        opacity: 0.6; 
+        background-color: #eee; 
+        cursor: not-allowed;
+    }
+
     #app {
         display: flex;
         align-items: center;

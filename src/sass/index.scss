@@ -1,4 +1,3 @@
-
 @import "base.scss";
 
 #app {
@@ -131,7 +130,8 @@
                             }
 
                             input[type="text"],
-                            input[type="password"] {
+                            input[type="password"],
+                            input[type="email"] {
                                 width: calc(100% - 10px);
                                 margin-top: 10px;
                                 height: 6rem;
@@ -257,6 +257,8 @@
                         display: flex;
                         flex-direction: column;
                         align-items: center;
+                        max-height: 50%;
+                        overflow-y: auto;
 
                         .input-wrap-item {
                             position: relative;
@@ -266,10 +268,19 @@
                             p {
                                 @include setFontSize;
                                 font-weight: 500;
+
+                                span {
+                                    display: none;
+                                    font-size: 1.0rem;
+                                    color: #8B57FE;
+                                    ;
+                                    margin-left: 5px;
+                                }
                             }
 
                             input[type="text"],
-                            input[type="password"] {
+                            input[type="password"],
+                            input[type="email"] {
                                 width: calc(100% - 10px);
                                 margin-top: 10px;
                                 height: 5rem;
@@ -282,7 +293,8 @@
                             }
 
                             #inputSignId,
-                            #inputSignNick {
+                            #inputSignNick,
+                            #inputSignEmail {
                                 width: calc(100% - 20px - 30%);
                             }
 
@@ -302,7 +314,7 @@
                             }
                         }
 
-                        .input-wrap-item:nth-child(4) {
+                        .input-wrap-item:nth-child(5) {
                             margin-bottom: 0px;
                         }
                     }
