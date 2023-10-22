@@ -31,17 +31,17 @@ const tab = (class_,field, event) => {
     if(event.which == 13 || event.keyCode == 13){
         if(class_ == ".input-sign-text"){
             if(parseInt(element.data("tab")) == 4) {
-                $("#inputtTerms").on("focus");
+                $("#inputtTerms").trigger("focus");
             }else{
-                $(".input-sign-text").eq(parseInt(element.data("tab"))).focus();
+                $(".input-sign-text").eq(parseInt(element.data("tab"))).trigger("focus");
             }
         }else{
             switch (element.data("tab")) {
                 case 1:
-                    $(".input-text").eq(1).focus();
+                    $(".input-text").eq(1).trigger("focus");
                     break;
                 case 2:
-                    //$("#inputAutoLogin").focus();
+                    $("#loginBtn").trigger("click");
                     break;
                 default:
                     break;
@@ -136,13 +136,17 @@ const chkPW = id => {
     const spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
     if(pw.length < 10 || pw.length > 20){
-        alert("10자리 ~ 20자리 이내로 입력해주세요.");
+        alert("비밀번호는 10자리 ~ 20자리 이내로 입력해주세요.");
+        $(id).trigger("focus");
         return false;
     }else if(pw.search(/\s/) != -1){
         alert("비밀번호는 공백 없이 입력해주세요.");
+        $(id).trigger("focus")
         return false;
-    }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
+    }
+    else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
         alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+        $(id).trigger("focus")
         return false;
     }else {
         console.log("통과");

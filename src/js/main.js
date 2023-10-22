@@ -1,7 +1,34 @@
 import "../sass/main.scss";
 import {calSize,getLocalStorage,setLocalStorage} from "./utils/util.js"
+import {validateToken} from "./cert/cert.js"
+import apiConfig from '../json/api-config.json';
 $(()=> {
     calSize();
+
+    if(getLocalStorage("token") != null){
+
+        validateToken(apiConfig.validateToken,getLocalStorage("token"),{
+                success : res => {
+                    setLocalStorage("token",res.data);
+                },
+                fail : () => {
+                    alert("로그인 페이지로 이동합니다.");
+                    location.href = "./";
+                    return;
+                },
+                errpr : () => {
+                    alert("로그인 페이지로 이동합니다.");
+                    location.href = "./";
+                    return;
+                }
+            }
+        );
+    }else{
+        alert("로그인 페이지로 이동합니다.");
+        location.href = "./";
+        return;
+    }
+
     $("body").fadeIn(1000);
 
     //pc -> 좌측네비, mobile -> 하단네비 클릭이벤트

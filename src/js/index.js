@@ -1,11 +1,15 @@
 import apiConfig from '../json/api-config.json';
 import "../sass/index.scss";
-import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck} from "./utils/util.js"
-import {login,validateToken,duplicateCheck} from "./cert/cert.js"
+import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck, chkPW} from "./utils/util.js"
+import {login,validateToken,duplicateCheck,signIn} from "./cert/cert.js"
 
-let idDuplicateCheck = false;
-let nickDuplicateCheck = false;
-let emailDuplicateCheck = false;
+let idDuplicateCheck = false;//아이디 중복체크 변수
+let nickDuplicateCheck = false;//닉네임 중복체크 변수
+let emailDuplicateCheck = false;//이메일 중복체크 변수
+
+let signId = ""; //회원가입 아이디
+let signNick = ""; //회원가입 닉네임
+let signEmail = ""; //회원가입 이메일
 
 $(()=> {
     calSize();
@@ -14,16 +18,18 @@ $(()=> {
 
     if(getLocalStorage("token") != null){
 
-        validateToken(apiConfig.validateToken,getLocalStorage("token"),
-            success => {
-                setLocalStorage("token",success.data);
-                location.href = "main.html";
-            },
-            fail => {
-                console.log(fail);
-            },
-            error => {
-                console.log(error);
+        validateToken(apiConfig.validateToken,getLocalStorage("token"),{
+                success : res => {
+                    setLocalStorage("token",res.data);
+                    location.href = "main.html";
+                    return;
+                },
+                fail : res => {
+                    console.log(res);
+                },
+                error : res => {
+                    console.log(res);
+                }
             }
         );
     }
@@ -57,18 +63,19 @@ $(()=> {
         const id = $("#inputId").val();
         const pw = $("#inputPw").val();
 
-        login(apiConfig.login,id,pw,
-            success => {
-                setLocalStorage("token",success.data);
-                location.href = "main.html";
-            },
-            fail => {
-                alert(fail.msg);
-            },
-            error => {
-                console.log(error);
-                alert("네트워크 에러! 페이지가 새로고침 됩니다");
-                location.reload();
+        login(apiConfig.login,id,pw,{
+                success : res => {
+                    setLocalStorage("token",res.data);
+                    location.href = "main.html";
+                },
+                fail : res => {
+                    alert(res.msg);
+                },
+                error : res => {
+                    console.log(res);
+                    alert("네트워크 에러! 페이지가 새로고침 됩니다");
+                    location.reload();
+                }
             }
         );
     });
@@ -142,27 +149,31 @@ $(()=> {
             }
         }
 
-        duplicateCheck(apiConfig.duplicate_check,type,$(`#inputSign${type}`).val(),
-            success => {
-                $(`#inputSign${type}`).prop("disabled", true);
-                $(this).text("변경");
-
-                if(type == "Id"){
-                    idDuplicateCheck = true;
-                    $("#signIdOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 아이디 입니다.)")});
-                }else if(type == "Nick"){
-                    nickDuplicateCheck = true;
-                    $("#signNickOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 닉네임 입니다.)")});
-                }else if(type == "Email"){
-                    emailDuplicateCheck = true;
-                    $("#signEmailOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 이메일 입니다.)")});
+        duplicateCheck(apiConfig.duplicate_check,type,$(`#inputSign${type}`).val(),{
+                success : () => {
+                    $(`#inputSign${type}`).prop("disabled", true);
+                    $(this).text("변경");
+    
+                    if(type == "Id"){
+                        idDuplicateCheck = true;
+                        $("#signIdOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 아이디 입니다.)")});
+                        signId = $(`#inputSign${type}`).val();
+                    }else if(type == "Nick"){
+                        nickDuplicateCheck = true;
+                        $("#signNickOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 닉네임 입니다.)")});
+                        signNick = $(`#inputSign${type}`).val();
+                    }else if(type == "Email"){
+                        emailDuplicateCheck = true;
+                        $("#signEmailOkMsg").fadeIn(300,function(){$(this).text("(사용가능한 이메일 입니다.)")});
+                        signEmail = $(`#inputSign${type}`).val();
+                    }
+                },
+                fail : res => {
+                    alert(res.msg);
+                },
+                error : res => {
+                    console.log(res);
                 }
-            },
-            fail => {
-                alert(fail.msg);
-            },
-            error => {
-                console.log(error);
             }
         );
     });
@@ -176,8 +187,53 @@ $(()=> {
         });
     });
 
+    //회원가입 버튼
     $("#signBtn").on("click", e => {
         e.preventDefault();
+
+        if(!idDuplicateCheck){
+            alert("아이디 중복검사를 진행해주세요.");
+            return;
+        }
+
+        if(!nickDuplicateCheck){
+            alert("닉네임 중복검사를 진행해주세요.");
+            return;
+        }
+
+        if(!emailDuplicateCheck){
+            alert("이메일 중복검사를 진행해주세요.");
+            return;
+        }
+
+        if(!chkPW("#inputSignPw")){
+            return;
+        }
+
+        if(!$("#inputTerms").prop('checked')){
+            alert("이용약관에 동의해주세요");
+            return;
+        }
+
+        if(!$("#inputPrivacyTerms").prop('checked')){
+            alert("개인정보 수집이용에 동의해주세요.");
+            return;
+        }
+
+        signIn(apiConfig.sign_in,signId,signNick,$("#inputSignPw").val(),signEmail,{
+                success : res => {
+                    setLocalStorage("token",res.data);
+                    alert("회원가입에 성공하였습니다. 메인페이지로 이동합니다.");
+                    location.href = "main.html";
+                },
+                fail : res => {
+                    alert(res.msg);
+                },
+                error : res => {
+                    alert(res.msg);
+                }
+            }
+        )
     });
 });
 
