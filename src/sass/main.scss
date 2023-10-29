@@ -9,7 +9,7 @@
             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
             overflow: hidden;
             position: relative;
-            background-color: rgba($color: #fff, $alpha: .7);
+            background-color: rgba($color: #fff, $alpha: .5);
             display: flex;
 
             //모바일
@@ -59,7 +59,7 @@
 
                     .dialog-main-nav {
                         display: grid;
-                        grid-template-columns: 1fr 1fr 1fr;
+                        grid-template-columns: 1fr 1fr;
                         width: calc(100% - 40px);
                         margin-left: 20px;
                         margin-right: 20px;
@@ -115,9 +115,9 @@
                             }
                         }
 
-                        .dialog-main-nav-item:nth-child(4) {
+                        .dialog-main-nav-item:nth-child(3) {
                             cursor: inherit;
-                            grid-column: span 3;
+                            grid-column: span 2;
                             margin-top: 0px;
                         }
 
@@ -195,6 +195,95 @@
                         }
                     }
                 }
+
+                .dialog-wirte {
+                    display: none;
+                    width: 100%;
+                    height: calc(100% - 100px);
+                    flex-direction: column;
+                    align-items: center;
+                    padding-top: 10px;
+
+                    .dialog-write-input-text,
+                    .dialog-write-input-date {
+                        min-width: calc(100% - 60px);
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        height: 4rem;
+                        border-radius: 1.5rem;
+                        background-color: rgba(137, 84, 254, .1);
+                        border: none;
+                        margin-top: 10px;
+                        @include setFontSize(1.2rem);
+                    }
+
+                    .dialog-write-input-date {
+                        margin-top: 10px;
+                        content: attr(data-placeholder);
+                        -webkit-appearance: none;
+                        appearance: none;
+                        color: black;
+                    }
+
+                    .dialog-write-select {
+                        min-width: calc(100% - 40px);
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        height: 4rem;
+                        border: none;
+                        border-radius: 1.5rem;
+                        @include setFontSize(1.2rem);
+                        background-color: rgba(137, 84, 254, .1);
+                        margin-top: 10px;
+                        color: #8e8e8e;
+                    }
+
+
+                    .dialog-write-textarea-wrap {
+                        position: relative;
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        .dialog-write-textarea-limit-text {
+                            position: absolute;
+                            bottom: 10px;
+                            right: 30px;
+                            color: #3b3b3b;
+                            @include setFontSize(1.5rem);
+                        }
+
+                        .dialog-write-textarea {
+                            @include setFontSize(1.2rem);
+                            min-width: calc(100% - 60px);
+                            padding-left: 10px;
+                            padding-right: 10px;
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                            border-radius: 2rem;
+                            margin-top: 10px;
+                            background-color: rgba(137, 84, 254, .1);
+                            border: none;
+                            resize: none;
+                            overflow-y: auto;
+                            height: 20rem;
+                        }
+                    }
+
+                    .dialog-wirte-search-photo {
+                        width: calc(100% - 40px);
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                        border: none;
+                        border-radius: 2.0rem;
+                        @include setFontSize(1.5rem);
+                        background-color: #8954FE;
+                        margin-top: 10px;
+                        color: white;
+                        cursor: pointer;
+                    }
+                }
             }
 
             //PC,태블릿
@@ -205,10 +294,10 @@
                     height: calc(100% - 120px);
                     margin-top: 120px;
 
-                    @include desktop_1400_under {
-                        height: calc(100% - 205px);
-                        margin-top: 205px;
-                    }
+                    // @include desktop_1400_under {
+                    //     height: calc(100% - 205px);
+                    //     margin-top: 205px;
+                    // }
 
                     display: flex;
                     flex-direction: column;
@@ -252,14 +341,14 @@
 
                     .dialog-main-nav {
                         display: grid;
-                        grid-template-columns: 1fr 1fr 1fr 3fr;
+                        grid-template-columns: 1fr 1fr 4fr;
                         width: 100%;
                         height: 120px;
                         gap: 2vw;
 
                         @include desktop_1400_under {
                             height: 180px;
-                            grid-template-columns: 1fr 1fr 1fr;
+                            grid-template-columns: 1fr 1fr;
                         }
 
                         .dialog-main-nav-item {
@@ -321,11 +410,11 @@
                             }
                         }
 
-                        .dialog-main-nav-item:nth-child(4) {
+                        .dialog-main-nav-item:nth-child(3) {
                             cursor: inherit;
 
                             @include desktop_1400_under {
-                                grid-column: span 3;
+                                grid-column: span 2;
                                 margin-top: 0px;
                             }
                         }
@@ -428,6 +517,188 @@
                         }
                     }
 
+                }
+
+                .dialog-wirte {
+                    display: none;
+                    height: calc(100% - 45px);
+                    width: calc(100% - 230px);
+                    flex-direction: column;
+                    margin-right: 60px;
+                    padding-top: 45px;
+
+                    .dialog-write-input-text,
+                    .dialog-write-input-date {
+                        min-width: calc(100% - 50px);
+                        padding-left: 25px;
+                        padding-right: 25px;
+                        height: 60px;
+                        border-radius: 2rem;
+                        background-color: rgba(137, 84, 254, .1);
+                        border: none;
+                        margin-top: 10px;
+                        @include setFontSize(1.8rem);
+                    }
+
+                    .dialog-write-input-date {
+                        margin-top: 10px;
+                        content: attr(data-placeholder);
+                        -webkit-appearance: none;
+                        appearance: none;
+                        color: black;
+                    }
+
+                    .dialog-write-select {
+                        min-width: calc(100%);
+                        padding-left: 25px;
+                        padding-right: 25px;
+                        height: 60px;
+                        border: none;
+                        @include setFontSize(1.8rem);
+                        border-radius: 2rem;
+                        background-color: rgba(137, 84, 254, .1);
+                        margin-top: 10px;
+                    }
+
+                    .dialog-write-textarea-wrap {
+                        position: relative;
+                        width: 100%;
+
+                        .dialog-write-textarea-limit-text {
+                            position: absolute;
+                            bottom: 10px;
+                            right: 10px;
+                            color: #3b3b3b;
+                            @include setFontSize(1.8rem);
+                        }
+
+                        .dialog-write-textarea {
+                            min-width: calc(100% - 50px);
+                            @include setFontSize(1.8rem);
+                            padding-left: 25px;
+                            padding-right: 25px;
+                            padding-top: 25px;
+                            padding-bottom: 25px;
+                            margin-top: 10px;
+                            border-radius: 3rem;
+                            background-color: rgba(137, 84, 254, .1);
+                            border: none;
+                            resize: none;
+                            overflow-y: auto;
+                            height: 20rem;
+                        }
+                    }
+
+                    .dialog-wirte-search-photo {
+                        width: calc(100%);
+                        border: none;
+                        border-radius: 3.0rem;
+                        @include setFontSize(1.8rem);
+                        background-color: #8954FE;
+                        margin-top: 10px;
+                        color: white;
+                        cursor: pointer;
+                        padding-top: 10px;
+                        padding-bottom: 10px;
+                    }
+                }
+            }
+        }
+
+        #photoSelectDialog {
+            display:none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba($color: #000000, $alpha: .7);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+
+            #photoSelectDialogCancel p{
+                background-color: white;
+                width: 2px;
+            }
+
+            main {
+                max-width: 500px;
+                width: 80%;
+                height: fit-content;
+                aspect-ratio: 1/1.5;
+                background-color: white;
+                border-radius: 2.0rem;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                header {
+                    width: 100%;
+                    display: flex;
+                    height: fit-content;
+                    align-items: center;
+                    margin-bottom: 10px;
+
+                    #photoSelectSearchText {
+                        width: calc(70% - 30px);
+                        height: 5rem;
+                        margin-right: 10px;
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        border-radius: 1rem;
+                        background-color: rgba(137, 84, 254, .1);
+                        border: none;
+                        @include setFontSize(1.2rem);
+                    }
+
+                    #photoSelectSearchButton {
+                        width: 30%;
+                        height: 5rem;
+                        border: none;
+                        border-radius: 1.0rem;
+                        @include setFontSize(1.5rem);
+                        background-color: #8954FE;
+                        color: white;
+                    }
+                }
+
+                section {
+                    width: 100%;
+                    height: calc(100% - 10rem - 20px);
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    overflow-y: auto;
+                    align-content: start;
+                    .photo-item{
+                        min-width: calc(50% - 20px);
+                        height: fit-content;
+                        aspect-ratio: 1/1;
+                        padding: 10px;
+                        position: relative;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            background-color: black;
+                            display: block;
+                        }
+                    }
+                }
+
+                footer {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    width: 100%;
+                    height: 5rem;
+                    margin-top: 10px;
+                    border: none;
+                    border-radius: 1.0rem;
+                    @include setFontSize(1.5rem);
+                    background-color: #8954FE;
+                    color: white;
                 }
             }
         }

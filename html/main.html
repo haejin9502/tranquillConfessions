@@ -10,19 +10,19 @@
         <div id="wrap">
             <div id="dialog">
                 <nav class="dialog-nav">
-                    <div class="nav-item nav-selected">
+                    <div class="nav-item nav-selected" data-type="r">
                         <img src="../dist/images/icon_read.svg" alt="icon">
                         <p>읽기</p>
                     </div>
-                    <div class="nav-item">
+                    <div class="nav-item" data-type="w">
                         <img src="../dist/images/icon_write.svg" alt="icon">
                         <p>쓰기</p>
                     </div>
-                    <div class="nav-item">
+                    <div class="nav-item" data-type="m">
                         <img src="../dist/images/icon_user.svg" alt="icon">
                         <p>내정보</p>
                     </div>
-                    <div class="nav-item">
+                    <div class="nav-item" data-type="s">
                         <img src="../dist/images/icon_setting.svg" alt="icon">
                         <p>설정</p>
                     </div>
@@ -30,7 +30,6 @@
                 <main class="dialog-main">
                     <nav class="dialog-main-nav">
                         <div class="dialog-main-nav-item dialog-main-nav-item-selected"><span>전체보기</span></div>
-                        <div class="dialog-main-nav-item"><span>월별보기</span></div>
                         <div class="dialog-main-nav-item"><span>한장씩보기</span></div>
                         <div class="dialog-main-nav-item dialog-main-nav-item-input-wrap">
                             <img src="../dist/images/icon-search.svg" alt="icon">
@@ -47,6 +46,45 @@
                             </div>
                         </div>
                     </article>
+                </main>
+
+                <main class="dialog-wirte">
+                    <input type="text" class="dialog-write-input-text" id="dialogWriteTitle" placeholder="제목을 입력해주세요.">
+                    <input type="text" class="dialog-write-input-text" id="dialogWritePlace" placeholder="장소를 입력해주세요.">
+                    <input type="date" class="dialog-write-input-date" id="dialogWriteDate" data-placeholder="날짜를 선택해주세요." required aria-required="true">
+                    <select class="dialog-write-select" id="dialogWriteWeatherSelect">
+                        <option value="0">날씨를 선태해주세요.</option>
+                        <option value="1">맑음</option>
+                        <option value="2">구름낌</option>
+                        <option value="3">흐림</option>
+                        <option value="4">비</option>
+                        <option value="5">눈</option>
+                    </select>
+                    <div class="dialog-write-textarea-wrap">                    
+                        <textarea class="dialog-write-textarea" id="dialoigWriteBody" maxlength="500" placeholder="내용을 입력해주세요(500자)"></textarea>
+                        <p class="dialog-write-textarea-limit-text">0/500</p>
+                    </div>
+                    <button class="dialog-wirte-search-photo">사진찾기</button>
+                </main>
+            </div>
+
+            <div id="photoSelectDialog">
+                <div id="photoSelectDialogCancel" class="cancle-btn">
+                    <p></p>
+                    <p></p>
+                </div>
+                <main>
+                    <header>
+                        <input type="text" id="photoSelectSearchText" placeholder="검색어를 입력해주세요.">
+                        <button id="photoSelectSearchButton">찾기</button>
+                    </header>
+                    <section>
+                        <div class="photo-item"><img src="" alt="phpto-img"></div>
+                        <div class="photo-item"><img src="" alt="phpto-img"></div>
+                        <div class="photo-item"><img src="" alt="phpto-img"></div>
+                        <div class="photo-item"><img src="" alt="phpto-img"></div>
+                    </section>
+                    <footer>확인</footer>
                 </main>
             </div>
         </div>

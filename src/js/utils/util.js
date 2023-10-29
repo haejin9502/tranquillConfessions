@@ -154,6 +154,46 @@ const chkPW = id => {
     }
 }
 
+/**
+ * textarea 글자 수 제한 및 출력
+ * @author 장해진
+ * @param {String} textarea 글자수를 제한할 textarea id 
+ * @param {String} text 현재 글자수를 출력할 id 
+ * @return
+ */
+const setTextAreaLimit = (textarea,text) =>{
+    $(textarea).on("keyup",function(e){
+        let content = $(this).val();
+
+        // 글자수 제한
+        if (content.length > 500) {
+            // 200자 부터는 타이핑 되지 않도록
+            $(this).val($(this).val().substring(0, 500));
+            $(text).text(`${content.length}/500`);
+            return;
+        };
+
+        $(text).text(`${content.length}/500`);
+    });
+}
+
+/**
+ * select/option 색상 변경
+ * @author 장해진
+ * @param {String} id 색상을 변경할 select
+ * @return
+ */
+const changeSelectColor = id => {
+    $(id).on("change",function(){
+        const value  = $(this).val();
+        if(parseInt(value) == 0){
+            $(this).css("color","#8e8e8e");
+        }else{
+            $(this).css("color","black");
+        }
+    }).trigger('change');
+}
+
 export {
     calSize,
     tab,
@@ -164,4 +204,6 @@ export {
     inputLimit,
     emailCheck,
     chkPW,
+    setTextAreaLimit,
+    changeSelectColor
 };

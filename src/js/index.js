@@ -1,7 +1,7 @@
 import apiConfig from '../json/api-config.json';
 import "../sass/index.scss";
 import {calSize,tab,getLocalStorage,setLocalStorage,inputLimit,emailCheck, chkPW} from "./utils/util.js"
-import {login,validateToken,duplicateCheck,signIn} from "./cert/cert.js"
+import {login,validateToken,duplicateCheck,signIn} from "./api/cert.js"
 
 let idDuplicateCheck = false;//아이디 중복체크 변수
 let nickDuplicateCheck = false;//닉네임 중복체크 변수

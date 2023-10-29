@@ -22,16 +22,51 @@ body {
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
 
-    @include mobile {
-        input::placeholder{
+        /* IE */
+    select::-ms-expand { 
+        display: none;
+    }
+    select {
+        -o-appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    input::placeholder,textarea::placeholder{
+        @include mobile {
             @include setFontSize(1.2rem);
         }
+        color: #8e8e8e;
     }
+
 
     input:disabled {
         opacity: 0.6; 
         background-color: #eee; 
         cursor: not-allowed;
+    }
+
+    input[type='date']::before {
+        content: attr(data-placeholder);
+        @include mobile {
+            @include setFontSize(1.2rem);
+        }
+        min-width: 100%;
+        color: #8e8e8e;
+    }
+    input[type='date']:focus::before,
+    input[type='date']:valid::before {
+        display: none;
+    }
+    input[type='date']::-webkit-date-and-time-value{
+        text-align: left;
+    }
+    
+    @media (hover: hover) { //모바일 기기는 hover 제외
+        input[type='date']:hover::before {
+            display: none;
+        }
     }
 
     #app {
