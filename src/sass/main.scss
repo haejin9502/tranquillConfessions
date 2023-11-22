@@ -238,6 +238,43 @@
                         color: #8e8e8e;
                     }
 
+                    .dialog-write-input-wrap {
+                        width: calc(100% - 40px);
+                        display: flex;
+                        flex-direction: row;
+
+                        .dialog-write-input-wrap-left {
+                            display: flex;
+                            flex-direction: column;
+                            flex: 1;
+                        }
+
+                        .dialog-write-input-wrap-right {
+                            height: 140px;
+                            aspect-ratio: 1/1;
+                            background-color: black;
+                            margin-left: 10px;
+                            margin-top: 10px;
+                            cursor: pointer;
+                            background-color: rgba($color: #8954FE, $alpha: .1);
+                            border-radius: 1.5rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            overflow: hidden;
+                            p{
+                                @include setFontSize(1.5rem);
+                                font-weight: 500;
+                            }
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                border: none;
+                                object-fit: cover;
+                                display: none;
+                            }
+                        }
+                    }
 
                     .dialog-write-textarea-wrap {
                         position: relative;
@@ -270,15 +307,15 @@
                             height: 20rem;
                         }
                     }
-
-                    .dialog-wirte-search-photo {
-                        width: calc(100% - 40px);
-                        padding-top: 10px;
-                        padding-bottom: 10px;
+                    #dialogWriteCommit{
+                        min-width: calc(100% - 40px);
+                        padding-left: 10px;
+                        padding-right: 10px;
+                        height: 4rem;
                         border: none;
-                        border-radius: 2.0rem;
+                        border-radius: 1.5rem;
                         @include setFontSize(1.5rem);
-                        background-color: #8954FE;
+                        background-color: rgba(137, 84, 254);
                         margin-top: 10px;
                         color: white;
                         cursor: pointer;
@@ -560,6 +597,43 @@
                         margin-top: 10px;
                     }
 
+                    .dialog-write-input-wrap {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+
+                        .dialog-write-input-wrap-left {
+                            display: flex;
+                            flex-direction: column;
+                            flex: 1;
+                        }
+
+                        .dialog-write-input-wrap-right {
+                            height: 200px;
+                            aspect-ratio: 1/1;
+                            background-color: rgba($color: #8954FE, $alpha: .1);
+                            margin-left: 10px;
+                            margin-top: 10px;
+                            cursor: pointer;
+                            border-radius: 2rem;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            overflow: hidden;
+                            p{
+                                @include setFontSize(2.0rem);
+                                font-weight: 500;
+                            }
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                border: none;
+                                object-fit: cover;
+                                display: none;
+                            }
+                        }
+                    }
+
                     .dialog-write-textarea-wrap {
                         position: relative;
                         width: 100%;
@@ -588,25 +662,26 @@
                             height: 20rem;
                         }
                     }
+                }
 
-                    .dialog-wirte-search-photo {
-                        width: calc(100%);
-                        border: none;
-                        border-radius: 3.0rem;
-                        @include setFontSize(1.8rem);
-                        background-color: #8954FE;
-                        margin-top: 10px;
-                        color: white;
-                        cursor: pointer;
-                        padding-top: 10px;
-                        padding-bottom: 10px;
-                    }
+                #dialogWriteCommit{
+                    min-width: calc(100%);
+                    padding-left: 25px;
+                    padding-right: 25px;
+                    height: 60px;
+                    border: none;
+                    @include setFontSize(2.0rem);
+                    border-radius: 2rem;
+                    background-color: rgba(137, 84, 254);
+                    margin-top: 10px;     
+                    color: white;
+                    cursor: pointer;
                 }
             }
         }
 
         #photoSelectDialog {
-            display:none;
+            display: none;
             position: absolute;
             width: 100%;
             height: 100%;
@@ -615,7 +690,7 @@
             align-items: center;
             justify-content: center;
 
-            #photoSelectDialogCancel p{
+            #photoSelectDialogCancel p {
                 background-color: white;
                 width: 2px;
             }
@@ -659,6 +734,7 @@
                         @include setFontSize(1.5rem);
                         background-color: #8954FE;
                         color: white;
+                        cursor: pointer;
                     }
                 }
 
@@ -670,18 +746,44 @@
                     flex-wrap: wrap;
                     overflow-y: auto;
                     align-content: start;
-                    .photo-item{
-                        min-width: calc(50% - 20px);
-                        height: fit-content;
+
+                    .photo-empty {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        @include setFontSize(2.0rem);
+                    }
+
+                    .photo-item {
+                        max-width: calc(50% - 20px);
+                        width: calc(50% - 20px);
                         aspect-ratio: 1/1;
                         padding: 10px;
                         position: relative;
-                        img{
+                        cursor: pointer;
+
+                        img {
                             width: 100%;
                             height: 100%;
                             object-fit: cover;
                             background-color: black;
                             display: block;
+                        }
+
+                        .photo-selected {
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba($color: #000000, $alpha: .7);
+                            color: white;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            @include setFontSize(2.0rem);
                         }
                     }
                 }

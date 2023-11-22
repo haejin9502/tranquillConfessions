@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Document</title>
 </head>
+
 <body style="display: none;">
     <div id="app">
         <div id="wrap">
@@ -38,33 +40,40 @@
                         </div>
                     </nav>
                     <article class="dialog-main-item-wrap scroll-none">
-                        <div class="dialog-main-item">
-                            <img class="dialog-main-item-img" src="" alt="dialog-main-item-img">
-                            <div class="dialog-main-item-title-wrap">
-                                <p>제목테스트제목테스트</p>
-                                <p>2023.10.00</p>
-                            </div>
-                        </div>
                     </article>
                 </main>
 
                 <main class="dialog-wirte">
                     <input type="text" class="dialog-write-input-text" id="dialogWriteTitle" placeholder="제목을 입력해주세요.">
-                    <input type="text" class="dialog-write-input-text" id="dialogWritePlace" placeholder="장소를 입력해주세요.">
-                    <input type="date" class="dialog-write-input-date" id="dialogWriteDate" data-placeholder="날짜를 선택해주세요." required aria-required="true">
-                    <select class="dialog-write-select" id="dialogWriteWeatherSelect">
-                        <option value="0">날씨를 선태해주세요.</option>
-                        <option value="1">맑음</option>
-                        <option value="2">구름낌</option>
-                        <option value="3">흐림</option>
-                        <option value="4">비</option>
-                        <option value="5">눈</option>
-                    </select>
-                    <div class="dialog-write-textarea-wrap">                    
-                        <textarea class="dialog-write-textarea" id="dialoigWriteBody" maxlength="500" placeholder="내용을 입력해주세요(500자)"></textarea>
+
+                    <div class="dialog-write-input-wrap">
+                        <div class="dialog-write-input-wrap-left">
+                            <input type="text" class="dialog-write-input-text" id="dialogWritePlace"
+                                placeholder="장소를 입력해주세요.">
+                            <input type="date" class="dialog-write-input-date" id="dialogWriteDate"
+                                data-placeholder="날짜를 선택해주세요." required aria-required="true">
+                            <select class="dialog-write-select" id="dialogWriteWeatherSelect">
+                                <option value="0">날씨를 선태해주세요.</option>
+                                <option value="1">맑음</option>
+                                <option value="2">구름낌</option>
+                                <option value="3">흐림</option>
+                                <option value="4">비</option>
+                                <option value="5">눈</option>
+                            </select>
+                        </div>
+                        <div class="dialog-write-input-wrap-right dialog-wirte-search-photo">
+                            <p>사진등록</p>
+                            <img src="" alt="diary-phpto">
+                        </div>
+                    </div>
+
+
+                    <div class="dialog-write-textarea-wrap">
+                        <textarea class="dialog-write-textarea" id="dialoigWriteBody" maxlength="500"
+                            placeholder="내용을 입력해주세요(500자)"></textarea>
                         <p class="dialog-write-textarea-limit-text">0/500</p>
                     </div>
-                    <button class="dialog-wirte-search-photo">사진찾기</button>
+                    <button id="dialogWriteCommit">등록</button>
                 </main>
             </div>
 
@@ -79,10 +88,6 @@
                         <button id="photoSelectSearchButton">찾기</button>
                     </header>
                     <section>
-                        <div class="photo-item"><img src="" alt="phpto-img"></div>
-                        <div class="photo-item"><img src="" alt="phpto-img"></div>
-                        <div class="photo-item"><img src="" alt="phpto-img"></div>
-                        <div class="photo-item"><img src="" alt="phpto-img"></div>
                     </section>
                     <footer>확인</footer>
                 </main>
@@ -96,4 +101,5 @@
     script.src = `../dist/js/main.js?ts=${timestamp}`;
     document.head.appendChild(script);
 </script>
+
 </html>

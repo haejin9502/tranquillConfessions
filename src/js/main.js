@@ -1,6 +1,8 @@
 import "../sass/main.scss";
-import {calSize,getLocalStorage,setLocalStorage,setTextAreaLimit,changeSelectColor} from "./utils/util.js"
+import {calSize,getLocalStorage,setLocalStorage
+        ,setTextAreaLimit,changeSelectColor,replaceSizeInUrl} from "./utils/util.js"
 import {validateToken} from "./api/cert.js"
+import {getPhoto,writeDiary,getDialog} from "./api/info";
 import apiConfig from '../json/api-config.json';
 $(()=> {
     calSize();
@@ -29,10 +31,39 @@ $(()=> {
         return;
     }
 
-    $("body").fadeIn(1000);
+    getDialog(apiConfig.get_dialog,getLocalStorage("token"),{
+        success : res => {
 
-    setTextAreaLimit("#dialoigWriteBody",".dialog-write-textarea-limit-text")
-    changeSelectColor("#dialogWriteWeatherSelect");
+            const parent = $(".dialog-main-item-wrap");
+            parent.empty();
+
+            for(let item of res.data){
+                parent.append(`
+                <div class="dialog-main-item" data-id="${item.idx}">
+                    <img class="dialog-main-item-img" src="${item.photo}" alt="dialog-main-item-img">
+                    <div class="dialog-main-item-title-wrap">
+                        <p>${item.title}</p>
+                        <p>${item.date}</p>
+                    </div>
+                </div>
+                `)
+            }
+
+            $("body").fadeIn(1000);
+
+            setTextAreaLimit("#dialoigWriteBody",".dialog-write-textarea-limit-text")
+            changeSelectColor("#dialogWriteWeatherSelect");
+
+        },
+        fail : res => {
+            console.log(res);
+        },
+        error : res => {
+            console.log(res);
+        }
+    });
+
+
 
     //pc -> 좌측네비, mobile -> 하단네비 클릭이벤트
     $(".nav-item").on("click",function(e){
@@ -69,6 +100,7 @@ $(()=> {
         $("#photoSelectDialog").css("display","flex");
     });
 
+    //사진 다이얼로그 취소 버튼
     $("#photoSelectDialogCancel").on("click",()=>{
         $("#photoSelectDialog").hide(()=>{
             $("#photoSelectDialog section").empty();
@@ -78,6 +110,147 @@ $(()=> {
 
     //사진다이얼로그 찾기 클릭 이벤트
     $("#photoSelectSearchButton").on("click",()=>{
+        const inputText = $("#photoSelectSearchText");
+        const imageWrap = $("#photoSelectDialog section");
 
+        if(inputText.val() == null){
+            alert("검색어를 입력해주세요.");
+            return;
+        }
+
+        if(inputText.val() < 2){
+            alert("검색어는 2자 이상 입력해주세요.");
+            return;
+        }
+
+        getPhoto(apiConfig.photo,inputText.val(),{
+            success : res =>{
+                imageWrap.empty();
+                console.log(res);
+
+                if(res.length == 0){
+                    imageWrap.append(`
+                        <div class="photo-empty">다른 검색어를 입력해주세요.</div>
+                    `);
+                    return;
+                }
+
+                for(let i = 0; i < res.length; i++){
+                    imageWrap.append(`
+                    <div class="photo-item">
+                        <img src="${res[i].webformatURL}" alt="phpto-img" 
+                        data-src="${replaceSizeInUrl(res[i].previewURL,640)}">
+                    </div>
+                    `);
+                }
+            },
+            error : res => {
+                console.log(res);
+                alert(res);
+                imageWrap.append(`
+                    <div class="photo-empty">다른 검색어를 입력해주세요.</div>
+                `);
+            }
+        })
     });
+
+    //사진클릭이벤트
+    $(document).on("click",".photo-item",function(e){
+        e.preventDefault();
+        if(!$(this).hasClass("selected")){
+            $(".selected").removeClass("selected");
+            $(".photo-selected").remove();
+            $(this).addClass("selected");
+            $(this).append(`<div class="photo-selected">선택됨</div>`);
+        }
+    });
+
+    //사진 다이얼로그 등록버튼
+    $("#photoSelectDialog footer").on("click",()=>{
+        const item = $(".photo-item");
+        const selectedItem = $(".photo-selected");
+        if(item.length > 0){
+            console.log(selectedItem);
+            if(selectedItem.length > 0){
+                const src = selectedItem.closest(".photo-item").children("img").data("src");
+                $(".dialog-wirte-search-photo img").css("display","block");
+                $(".dialog-wirte-search-photo p").css("display","none");
+                $(".dialog-wirte-search-photo img").attr("src",src);
+                $("#photoSelectDialog").hide(()=>{
+                    $("#photoSelectDialog section").empty();
+                    $("#photoSelectSearchText").val("");
+                });
+            }else{
+                alert("선택된 사진이 없습니다.");
+            }
+        }else{
+            alert("선택된 사진이 없습니다.");
+        }
+    });
+
+    //등록버튼 클릭 이벤트 
+    $("#dialogWriteCommit").on("click",()=>{
+        const title = $("#dialogWriteTitle").val();
+        const date = $("#dialogWriteDate").val();
+        const place = $("#dialogWritePlace").val();
+        const weather = $("#dialogWriteWeatherSelect").val();
+        const photo = $(".dialog-wirte-search-photo img").attr("src");
+        const body = $("#dialoigWriteBody").val();
+
+        console.log("내용들",new Array(
+            title,date,place,weather,photo,body
+        ));
+
+        if(title.length <= 0){
+            alert("제목을 입력해주세요");
+            return;
+        }
+
+        if(place.length <= 0){
+            alert("장소를 입력해주세요.");
+            return;
+        }
+
+        if(date.length <= 0){
+            alert("날짜를 입력해주세요.");
+            return;
+        }
+
+        if(weather.length <= 0){
+            alert("날씨를 선택해주세요.");
+            return;
+        }
+
+        if(body.length <= 0){
+            alert("내용을 입력해주세요.");
+            return;
+        }
+
+        if(photo.length <= 0){
+            if(!confirm("사진을 등록하지 않고 작성을 완료하시겠습니까?")){
+                return;
+            }
+        }
+
+        writeDiary(apiConfig.write,getLocalStorage("token"),title,date,place,weather,photo,body,{
+                success : res => {
+                    console.log(res);
+                    setLocalStorage("token",res.data); //토큰 갱신
+                    alert(res.msg);
+                    location.reload();
+                },
+                fail : res => {
+                    console.log(res);
+                    alert(res.msg);
+                    return;
+                },
+                error : res => {
+                    alert(res.msg);
+                    location.reload();
+                    return;
+                }
+            }
+        );
+    });
+
 });

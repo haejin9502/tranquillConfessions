@@ -194,6 +194,18 @@ const changeSelectColor = id => {
     }).trigger('change');
 }
 
+/**
+ * 이미지 url 사이즈 변경 함수
+ * @author 장해진
+ * @param {String} url 원본 url
+ * @param {int} newSize 새로운 사이즈
+ * @return
+ */
+const replaceSizeInUrl = (url, newSize) => {
+    // 정규식을 사용하여 URL에서 _숫자를 찾아내고 newSize로 대체합니다.
+    return url.replace(/(_\d+)(\.\w+)$/, `_${newSize}$2`);
+}
+
 export {
     calSize,
     tab,
@@ -205,5 +217,6 @@ export {
     emailCheck,
     chkPW,
     setTextAreaLimit,
-    changeSelectColor
+    changeSelectColor,
+    replaceSizeInUrl
 };
