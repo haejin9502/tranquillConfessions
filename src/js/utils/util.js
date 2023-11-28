@@ -206,6 +206,38 @@ const replaceSizeInUrl = (url, newSize) => {
     return url.replace(/(_\d+)(\.\w+)$/, `_${newSize}$2`);
 }
 
+/**
+ * 랜덤한 색상 출력
+ * @author 장해진
+ * @param {String} img 이미지 경로
+ * @return {String} url
+ */
+const setImageColor = img => {
+    if (img !== "") {
+        return img;
+    } else {
+        // 이미지를 그릴 캔버스 요소 생성
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // 캔버스 크기 설정 (가로, 세로)
+        canvas.width = 100;
+        canvas.height = 100;
+
+        // 랜덤 RGB 값을 생성 (파스텔톤 색상)
+        const pastelRed = Math.floor(255 - 0.4 * (255 - Math.floor(Math.random() * 256)));
+        const pastelGreen = Math.floor(255 - 0.4 * (255 - Math.floor(Math.random() * 256)));
+        const pastelBlue = Math.floor(255 - 0.4 * (255 - Math.floor(Math.random() * 256)));
+
+        // 캔버스에 색상 채우기
+        ctx.fillStyle = `rgb(${pastelRed},${pastelGreen},${pastelBlue})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        return canvas.toDataURL();
+    }
+}
+
+
 export {
     calSize,
     tab,
@@ -218,5 +250,6 @@ export {
     chkPW,
     setTextAreaLimit,
     changeSelectColor,
-    replaceSizeInUrl
+    replaceSizeInUrl,
+    setImageColor
 };
