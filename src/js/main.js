@@ -3,7 +3,7 @@ import {calSize,getLocalStorage,setLocalStorage
         ,setTextAreaLimit,changeSelectColor
         ,replaceSizeInUrl,setImageColor} from "./utils/util.js"
 import {validateToken} from "./api/cert.js"
-import {getPhoto,writeDiary,getDialog,getDialogSingle} from "./api/info";
+import {getPhoto,writeDiary,getDialog,getDialogSingle,deleteDialog} from "./api/info";
 import apiConfig from '../json/api-config.json';
 import weatherConfig from '../json/weather.json';
 $(()=> {
@@ -273,6 +273,7 @@ $(()=> {
         const weather = $(".dialog-popup-main-left-weather");
         const body = $(".dialog-popup-body");
         const photo = $(".dialog-popup-main-right img");
+        const deleteBtn = $(".dialog-popup-delete");
         
         getDialogSingle(apiConfig.get_dialog_single,item_id,getLocalStorage("token"),{
             success : res => {
@@ -284,6 +285,7 @@ $(()=> {
                 body.text(res.data[0].body);
                 photo.attr("src",imgSrc);
                 popup.css("display","flex");
+                deleteBtn.attr("data-id",item_id);
             },
             fail : res => {
                 console.log(res);
@@ -315,4 +317,24 @@ $(()=> {
         photo.attr("src","");
     });
 
+    //다이얼로그 팝업 삭제버튼
+    $(".dialog-popup-delete").on("click",e =>{
+        e.preventDefault();
+        const item_id = $(".dialog-popup-delete").attr("data-id");
+        console.log(item_id);
+        if(confirm("삭제하시겠습니까?")){
+            getDialogSingle(apiConfig.delete,item_id,getLocalStorage("token"),{
+                success : res => {
+                    alert(res.msg);
+                    location.reload();
+                },
+                fail : res => {
+                    console.log(res);
+                },
+                error : res => {
+                    console.log(res);
+                }
+            });
+        }
+    });
 });

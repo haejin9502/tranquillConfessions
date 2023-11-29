@@ -821,11 +821,6 @@
             align-items: center;
             justify-content: center;
 
-            #dialogPopupCancel p {
-                background-color: white;
-                width: 2px;
-            }
-
             main {
                 max-width: 500px;
                 width: 80%;
@@ -837,6 +832,16 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                position: relative;
+
+                .dialog-popup-delete{
+                    position: absolute;
+                    width: 20px;
+                    top: 15px;
+                    right: 15px;
+                    cursor: pointer;
+                }
+
                 header{
                     width: 100%;
                     display: flex;
